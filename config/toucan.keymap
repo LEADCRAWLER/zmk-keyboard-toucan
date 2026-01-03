@@ -1,0 +1,200 @@
+/*
+ * Toucan ZMK Keymap
+ * Konvertiert von Piantor Vial Layout
+ * 
+ * Layer 0: Base (Windows) - Home Row Mods: GUI-Alt-Ctrl-Shift
+ * Layer 1: Base (Mac) - Home Row Mods: Ctrl-Alt-GUI-Shift
+ * Layer 2: Mouse
+ * Layer 3: Symbols (DE Layout)
+ * Layer 4: (leer)
+ * Layer 5: Numpad
+ * Layer 6: (leer)
+ * Layer 7: F-Keys + Arrows
+ */
+
+#include <behaviors.dtsi>
+#include <dt-bindings/zmk/keys.h>
+#include <dt-bindings/zmk/bt.h>
+#include <dt-bindings/zmk/mouse.h>
+
+// Layer definitions
+#define WIN 0
+#define MAC 1
+#define MOUSE 2
+#define SYM 3
+#define EMPTY4 4
+#define NUM 5
+#define EMPTY6 6
+#define NAV 7
+
+// German key definitions (DE Layout on OS)
+#define DE_AUML RALT(Q)    // ä
+#define DE_UUML LBKT       // ü = [
+#define DE_OUML SEMI       // ö = ;
+#define DE_SZ MINUS        // ß = -
+#define DE_EURO RALT(E)    // €
+#define DE_LCBR RALT(N7)   // {
+#define DE_RCBR RALT(N0)   // }
+#define DE_LBKT RALT(N8)   // [
+#define DE_RBKT RALT(N9)   // ]
+#define DE_BSLS RALT(MINUS) // backslash
+#define DE_PIPE RALT(NUBS) // |
+#define DE_AT RALT(Q)      // @
+#define DE_TILD RALT(RBKT) // ~
+
+/ {
+    behaviors {
+        // Home Row Mods mit optimierten Einstellungen
+        hm: homerow_mods {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            require-prior-idle-ms = <125>;
+            flavor = "balanced";
+            bindings = <&kp>, <&kp>;
+        };
+        
+        // Layer-Tap für Thumb Keys
+        lt: layer_tap {
+            compatible = "zmk,behavior-hold-tap";
+            #binding-cells = <2>;
+            tapping-term-ms = <200>;
+            quick-tap-ms = <150>;
+            flavor = "balanced";
+            bindings = <&mo>, <&kp>;
+        };
+    };
+
+    keymap {
+        compatible = "zmk,keymap";
+
+        // Layer 0: Windows Base
+        win_layer {
+            display-name = "WIN";
+            bindings = <
+// ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
+    &to MAC   &kp Q     &kp W     &kp E     &kp R     &kp T         &kp Y     &kp U     &kp I     &kp O     &kp P     &kp LBKT
+// ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+    &kp RET   &hm LGUI A &hm LALT S &hm LCTRL D &hm LSHFT F &kp G   &kp H   &hm RSHFT J &hm RCTRL K &hm LALT L &hm RGUI SEMI &kp SQT
+// ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+    &kp LSHFT &kp Z     &kp X     &kp C     &kp V     &kp B         &kp N     &kp M     &kp COMMA &kp DOT   &kp FSLH  &kp MINUS
+// ╰─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┴─────────┴─────────╯
+                                  &lt NUM ESC &lt NAV W &lt MOUSE BSPC   &lt SYM SPACE &lt NAV TAB &lt NUM DEL
+//                               ╰─────────┴─────────┴─────────╯   ╰─────────┴─────────┴─────────╯
+            >;
+        };
+
+        // Layer 1: Mac Base (Ctrl und GUI vertauscht)
+        mac_layer {
+            display-name = "MAC";
+            bindings = <
+// ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
+    &to WIN   &kp Q     &kp W     &kp E     &kp R     &kp T         &kp Y     &kp U     &kp I     &kp O     &kp P     &kp LBKT
+// ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+    &kp RET   &hm LCTRL A &hm LALT S &hm LGUI D &hm LSHFT F &kp G   &kp H   &hm RSHFT J &hm RGUI K &hm LALT L &hm RCTRL SEMI &kp SQT
+// ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+    &kp LSHFT &kp Z     &kp X     &kp C     &kp V     &kp B         &kp N     &kp M     &kp COMMA &kp DOT   &kp FSLH  &kp MINUS
+// ╰─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┴─────────┴─────────╯
+                                  &lt NUM ESC &lt NAV M &lt MOUSE BSPC   &lt SYM SPACE &lt NAV TAB &lt NUM DEL
+//                               ╰─────────┴─────────┴─────────╯   ╰─────────┴─────────┴─────────╯
+            >;
+        };
+
+        // Layer 2: Mouse
+        mouse_layer {
+            display-name = "MOUSE";
+            bindings = <
+// ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
+    &trans    &trans    &trans    &msc SCRL_UP &trans &trans        &trans    &trans    &mmv MOVE_UP &trans &trans   &trans
+// ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+    &trans    &trans    &msc SCRL_LEFT &msc SCRL_DOWN &msc SCRL_RIGHT &trans   &trans &mmv MOVE_LEFT &mmv MOVE_DOWN &mmv MOVE_RIGHT &trans &trans
+// ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+    &trans    &trans    &trans    &trans    &trans    &trans        &trans    &trans    &trans    &trans    &trans    &trans
+// ╰─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┴─────────┴─────────╯
+                                  &trans    &trans    &trans        &mkp LCLK &mkp MCLK &mkp RCLK
+//                               ╰─────────┴─────────┴─────────╯   ╰─────────┴─────────┴─────────╯
+            >;
+        };
+
+        // Layer 3: Symbols (German Layout)
+        sym_layer {
+            display-name = "SYM";
+            bindings = <
+// ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
+    &kp RA(E) &kp RA(Q) &kp LS(N1) &kp RA(N8) &kp RA(N9) &kp LS(MINUS)   &trans &trans &trans &trans &trans &trans
+// ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+    &kp LS(N0) &kp LS(N6) &kp LS(N7) &kp LS(N8) &kp LS(N9) &kp RBKT   &trans &kp LS(N4) &trans &trans &trans &trans
+// ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+    &kp NUBS  &kp NUHS  &kp LS(N2) &kp LS(RBKT) &kp LS(N5) &kp FSLH   &trans &trans &trans &trans &trans &trans
+// ╰─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┴─────────┴─────────╯
+                                  &kp LSHFT &trans    &trans        &trans    &trans    &trans
+//                               ╰─────────┴─────────┴─────────╯   ╰─────────┴─────────┴─────────╯
+            >;
+        };
+
+        // Layer 4: Empty
+        empty4_layer {
+            display-name = "L4";
+            bindings = <
+// ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
+    &trans    &trans    &trans    &trans    &trans    &trans        &trans    &trans    &trans    &trans    &trans    &trans
+// ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+    &trans    &trans    &trans    &trans    &trans    &trans        &trans    &trans    &trans    &trans    &trans    &trans
+// ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+    &trans    &trans    &trans    &trans    &trans    &trans        &trans    &trans    &trans    &trans    &trans    &trans
+// ╰─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┴─────────┴─────────╯
+                                  &trans    &trans    &trans        &trans    &trans    &trans
+//                               ╰─────────┴─────────┴─────────╯   ╰─────────┴─────────┴─────────╯
+            >;
+        };
+
+        // Layer 5: Numpad
+        num_layer {
+            display-name = "NUM";
+            bindings = <
+// ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
+    &trans    &kp LS(N7) &kp N7   &kp N8    &kp N9    &kp FSLH      &kp LS(N7) &kp N7   &kp N8    &kp N9    &kp FSLH  &trans
+// ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+    &trans    &kp LS(RBKT) &kp N4 &kp N5    &kp N6    &kp RBKT      &kp LS(RBKT) &kp N4 &kp N5    &kp N6    &kp RBKT  &trans
+// ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+    &trans    &kp N0    &kp N1    &kp N2    &kp N3    &kp KP_ENTER  &kp N0    &kp N1    &kp N2    &kp N3    &kp KP_ENTER &trans
+// ╰─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┴─────────┴─────────╯
+                                  &trans    &trans    &trans        &trans    &trans    &trans
+//                               ╰─────────┴─────────┴─────────╯   ╰─────────┴─────────┴─────────╯
+            >;
+        };
+
+        // Layer 6: Empty
+        empty6_layer {
+            display-name = "L6";
+            bindings = <
+// ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
+    &trans    &trans    &trans    &trans    &trans    &trans        &trans    &trans    &trans    &trans    &trans    &trans
+// ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+    &trans    &trans    &trans    &trans    &trans    &trans        &trans    &trans    &trans    &trans    &trans    &trans
+// ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+    &trans    &trans    &trans    &trans    &trans    &trans        &trans    &trans    &trans    &trans    &trans    &trans
+// ╰─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┴─────────┴─────────╯
+                                  &trans    &trans    &trans        &trans    &trans    &trans
+//                               ╰─────────┴─────────┴─────────╯   ╰─────────┴─────────┴─────────╯
+            >;
+        };
+
+        // Layer 7: F-Keys + Navigation + Bluetooth
+        nav_layer {
+            display-name = "NAV";
+            bindings = <
+// ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮   ╭─────────┬─────────┬─────────┬─────────┬─────────┬─────────╮
+    &studio_unlock &trans &kp F7 &kp F8   &kp F9    &sys_reset    &kp PSCRN &trans    &kp UP    &trans    &trans    &bootloader
+// ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+    &trans    &trans    &kp F4    &kp F5    &kp F6    &kp F11       &trans    &kp LEFT  &kp DOWN  &kp RIGHT &trans    &trans
+// ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┼─────────┼─────────┤
+    &trans    &trans    &kp F1    &kp F2    &kp F3    &kp F12       &bt BT_SEL 0 &bt BT_SEL 1 &bt BT_SEL 2 &bt BT_SEL 3 &bt BT_SEL 4 &bt BT_CLR
+// ╰─────────┴─────────┴─────────┼─────────┼─────────┼─────────┤   ├─────────┼─────────┼─────────┼─────────┴─────────┴─────────╯
+                                  &trans    &trans    &trans        &kp SPACE &trans    &trans
+//                               ╰─────────┴─────────┴─────────╯   ╰─────────┴─────────┴─────────╯
+            >;
+        };
+    };
+};
