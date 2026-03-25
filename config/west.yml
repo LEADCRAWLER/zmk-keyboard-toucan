@@ -15,10 +15,10 @@ manifest:
       remote: zmkfirmware
       import: app/west.yml
     - name: cirque-input-module
-      remote: alee0729
-      revision: cdac7282  # 2026-03-21, PM-Features (PR #1-#4)
+      remote: petejohanson
+      revision: main
     - name: zmk-rgbled-widget
       remote: caksoylar
-      revision: a3510c9d
+      revision: main
   self:
     path: config
