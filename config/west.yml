@@ -16,7 +16,7 @@ manifest:
       import: app/west.yml
     - name: cirque-input-module
       remote: alee0729
-      revision: main
+      revision: cdac7282  # 2026-03-21, PM-Features (PR #1-#4)
     - name: zmk-rgbled-widget
       remote: caksoylar
       revision: a3510c9d
