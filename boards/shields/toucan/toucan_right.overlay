@@ -63,7 +63,19 @@
         dr-gpios = <&gpio0 2 (GPIO_ACTIVE_HIGH)>;
         sensitivity = "2x";
         x-invert;
-	    //sleep;
+
+        // Power optimization
+        sleep-interval = <50>;       // Hardware-Sleep Scan-Intervall (Register 0x0C, default 50)
+        idle-packets-count = <0>;    // Keine Z=0 Pakete nach Finger-Lift (spart MCU-Wakeups)
+
+        // Adaptive Abtastrate — 100Hz bei Bewegung, 10Hz bei Stillstand
+        adaptive-sample-rate;
+        high-sample-rate = <100>;
+        low-sample-rate = <10>;
+
+        // GlideExtend deaktivieren (Cursor-Nachgleiten nach Finger-Lift)
+        // Spart ~15% aktiv-Strom, stoppt Cursor sofort bei Finger-Lift
+        no-glide-extend;
     };
 };
 
