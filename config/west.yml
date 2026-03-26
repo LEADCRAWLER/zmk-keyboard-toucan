@@ -8,6 +8,8 @@ manifest:
       url-base: https://github.com/petejohanson/
     - name: alee0729
       url-base: https://github.com/alee0729
+    - name: leadcrawler
+      url-base: https://github.com/LEADCRAWLER
     - name: caksoylar
       url-base: https://github.com/caksoylar
   projects:
@@ -15,7 +17,7 @@ manifest:
       remote: zmkfirmware
       import: app/west.yml
     - name: cirque-input-module
-      remote: petejohanson
+      remote: leadcrawler
       revision: main
     - name: zmk-rgbled-widget
       remote: caksoylar

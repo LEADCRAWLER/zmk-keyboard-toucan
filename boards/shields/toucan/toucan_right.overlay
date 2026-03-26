@@ -63,7 +63,14 @@
         dr-gpios = <&gpio0 2 (GPIO_ACTIVE_HIGH)>;
         sensitivity = "2x";
         x-invert;
-	    //sleep;
+
+        // Power optimization
+        sleep-interval = <50>;
+        idle-packets-count = <0>;
+        adaptive-sample-rate;
+        high-sample-rate = <100>;
+        low-sample-rate = <10>;
+        no-glide-extend;
     };
 };
 
